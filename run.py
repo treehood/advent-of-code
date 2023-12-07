@@ -25,14 +25,17 @@ def run_solution(fn, filename):
 now = datetime.now(timezone(timedelta(hours=-5)))
 parser = argparse.ArgumentParser(description="Runs Advent of Code solutions for current day by default.")
 parser.add_argument("-d", "--day", type=int, help="The day of the solution to run.", default=now.day)
+parser.add_argument("-s", "--sample", action='store_true', help="Only run with the sample input.")
 parser.add_argument("-y", "--year", type=int, help="The year of the solution to run.", default=now.year)
 args = parser.parse_args()
 
 solution_fns = ["p1","p2"]
 in_file_paths = [
     f"input/{args.year}/day{args.day:02}_sample.txt",
-    f"input/{args.year}/day{args.day:02}.txt"
 ]
+
+if (not args.sample):
+    in_file_paths.append(f"input/{args.year}/day{args.day:02}.txt")
 
 module = import_module(f"py.{args.year}.day{args.day:02}")
 for fn in solution_fns:
